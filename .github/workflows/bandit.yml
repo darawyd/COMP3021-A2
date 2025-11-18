@@ -12,16 +12,26 @@ jobs:
             - name: Checkout repository
               uses: actions/checkout@v4
 
+<<<<<<< HEAD
             - name: Run Bandit security scan
               uses: shundor/bandit-action@v0.1
+=======
+            - name: Set up Python
+              uses: actions/setup-python@v5
+>>>>>>> 5c1455232a3d820720f90125e28238836c36c577
               with:
-                  path: "." # Scan entire repo
-                  level: high # Only show HIGH severity issues
-                  confidence: high # Only HIGH confidence issues
-                  exit_zero: true # Do not fail workflow even if issues found
+                  python-version: "3.10"
 
-            - name: Upload scan results
+            - name: Install Bandit
+              run: |
+                  pip install bandit
+
+            - name: Run Bandit scan
+              run: |
+                  bandit -r . -lll -o bandit-report.txt -f txt
+
+            - name: Upload Bandit Report
               uses: actions/upload-artifact@v4
               with:
                   name: bandit-report
-                  path: .
+                  path: bandit-report.txt
