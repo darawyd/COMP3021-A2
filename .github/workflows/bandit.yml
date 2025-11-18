@@ -12,16 +12,8 @@ jobs:
             - name: Checkout repository
               uses: actions/checkout@v4
 
-            - name: Run Bandit security scan
-              uses: shundor/bandit-action@v0.1
+            - name: Run Bandit Scan
+              uses: py-actions/bandit@v1
               with:
-                  path: "." # Scan entire repo
-                  level: high # Only show HIGH severity issues
-                  confidence: high # Only HIGH confidence issues
-                  exit_zero: true # Do not fail workflow even if issues found
-
-            - name: Upload scan results
-              uses: actions/upload-artifact@v4
-              with:
-                  name: bandit-report
-                  path: .
+                  path: "."
+                  options: "-r . --severity-level high"
