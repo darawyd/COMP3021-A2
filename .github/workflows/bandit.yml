@@ -12,8 +12,21 @@ jobs:
             - name: Checkout repository
               uses: actions/checkout@v4
 
-            - name: Run Bandit Scan
-              uses: py-actions/bandit@v1
+            - name: Set up Python
+              uses: actions/setup-python@v5
               with:
-                  path: "."
-                  options: "-r . --severity-level high"
+                  python-version: "3.10"
+
+            - name: Install Bandit
+              run: |
+                  pip install bandit
+
+            - name: Run Bandit scan
+              run: |
+                  bandit -r . -lll -o bandit-report.txt -f txt
+
+            - name: Upload Bandit Report
+              uses: actions/upload-artifact@v4
+              with:
+                  name: bandit-report
+                  path: bandit-report.txt
