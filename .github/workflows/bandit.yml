@@ -12,13 +12,8 @@ jobs:
             - name: Checkout repository
               uses: actions/checkout@v4
 
-<<<<<<< HEAD
-            - name: Run Bandit security scan
-              uses: shundor/bandit-action@v0.1
-=======
             - name: Set up Python
               uses: actions/setup-python@v5
->>>>>>> 5c1455232a3d820720f90125e28238836c36c577
               with:
                   python-version: "3.10"
 
