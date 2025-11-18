@@ -1,0 +1,27 @@
+name: Bandit Security Scan
+
+on:
+    push:
+    pull_request:
+
+jobs:
+    bandit-security:
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Checkout repository
+              uses: actions/checkout@v4
+
+            - name: Run Bandit security scan
+              uses: shundor/bandit-action@v1
+              with:
+                  path: "." # Scan entire repo
+                  level: high # Only show HIGH severity issues
+                  confidence: high # Only HIGH confidence issues
+                  exit_zero: true # Do not fail workflow even if issues found
+
+            - name: Upload scan results
+              uses: actions/upload-artifact@v4
+              with:
+                  name: bandit-report
+                  path: .
